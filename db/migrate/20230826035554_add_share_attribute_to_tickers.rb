@@ -1,0 +1,5 @@
+class AddShareAttributeToTickers < ActiveRecord::Migration[7.0]
+  def change
+    add_column :tickers, :share, :integer
+  end
+end

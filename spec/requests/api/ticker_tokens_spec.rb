@@ -1,0 +1,16 @@
+require 'rails_helper'
+
+RSpec.describe 'Api::TickerTokens', type: :request do
+  describe 'POST /create' do
+    context 'generate a ticker token if a ticker exists' do
+      let(:ticker_sample) { create(:ticker) }
+
+      before do
+        post '/api/ticker_tokens', params: { ticker: { symbol: ticker_sample.symbol } }, as: :json
+      end
+
+      it { expect(json[:ticker_token].nil?).to eq(false) }
+      it { expect(response).to have_http_status(:success) }
+    end
+  end
+end

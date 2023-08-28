@@ -1,0 +1,41 @@
+<div class='admin-container'>
+  <div class='approval'>
+    <h1>
+    A new account is requesting for approval.
+    </h1>
+  </div>
+  <div class='trader-information'>
+    <div class='individual-info-container'>
+      <h1>Trader ID:</h1>
+      <h1><%= @trader.id %></h1>
+    </div>
+    <div class='individual-info-container'>
+      <h1>Username:</h1>
+      <h1><%= @trader.username %></h1>
+    </div>
+    <div class='individual-info-container'>
+      <h1>First Name:</h1>
+      <h1><%= @trader.first_name %></h1>
+    </div>
+    <div class='individual-info-container'>
+      <h1>Last Name:</h1>
+      <h1><%= @trader.last_name %></h1>
+    </div>
+    <div class='individual-info-container'>
+      <h1>Email:</h1>
+      <h1><%= @trader.email %></h1>
+    </div>
+    <div class='individual-info-container'>
+      <h1>Country:</h1>
+      <h1><%= @trader.country %></h1>
+    </div>
+
+    <div class="last-text-container">
+      <h1 class="text">Approve this trader by logging in to
+       <%= link_to "Tradeable.", "http://localhost:3001", target: "_blank" %>
+      </h1>
+    </div>
+  </div>
+</div>
+
+
