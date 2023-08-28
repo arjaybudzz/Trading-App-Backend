@@ -85,3 +85,4 @@ production:
   database: trading_app_backend_production
   username: trading_app_backend
   password: <%= ENV["TRADING_APP_BACKEND_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL']%>
