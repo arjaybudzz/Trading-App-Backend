@@ -54,5 +54,3 @@ end
 gem "jwt", "~> 2.7"
 
 gem "fast_jsonapi", "~> 1.5"
-
-gem 'sprockets-rails'
