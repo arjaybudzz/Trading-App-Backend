@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get 'admins/create'
-  end
+  root 'rails#server'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
