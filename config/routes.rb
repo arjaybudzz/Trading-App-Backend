@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    get 'tokens/create'
+    get 'admins/create'
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
