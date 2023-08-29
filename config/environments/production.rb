@@ -93,7 +93,7 @@ Rails.application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :user_name            => 'juandelacruz.avion.99@gmail.com',
-    :password             => 'Avionschool',
+    :password             => 'mkuacmilgtedafyb',
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
