@@ -42,10 +42,12 @@ class Api::TransactionsController < ApplicationController
   def update_trader_balance
     case @transaction.action
     when 'buy'
+      StockComputingApi.reduce_trader_balance(current_ticker.trader, current_ticker)
       new_balance = format('%.2f', current_ticker.trader.balance + StockComputingApi.buy_profit(current_ticker))
       current_ticker.trader.update_attribute(:balance, new_balance)
       @transaction.update_attribute(:profit, StockComputingApi.buy_profit(current_ticker))
     when 'sell'
+      StockComputingApi.reduce_trader_balance(current_ticker.trader, current_ticker)
       new_balance = format('%.2f', current_ticker.trader.balance + StockComputingApi.sell_profit(current_ticker))
       current_ticker.trader.update_attribute(:balance, new_balance)
       @transaction.update_attribute(:profit, StockComputingApi.sell_profit(current_ticker))
