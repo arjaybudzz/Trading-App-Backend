@@ -11,6 +11,6 @@ class TraderMailer < ApplicationMailer
   def account_submission_notification(trader)
     @trader = trader
 
-    mail to: @trader.email, subject: 'Account Submitted'
+    mail to: [@trader.email], subject: 'Account Submitted'
   end
 end
