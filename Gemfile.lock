@@ -66,12 +66,16 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
     bcrypt (3.1.19)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    css_parser (1.14.0)
+      addressable
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -89,6 +93,7 @@ GEM
       activesupport (>= 4.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    htmlentities (4.3.4)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -121,6 +126,15 @@ GEM
     nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     pg (1.5.3)
+    premailer (1.21.0)
+      addressable
+      css_parser (>= 1.12.0)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.12.0)
+      actionmailer (>= 3)
+      net-smtp
+      premailer (~> 1.7, >= 1.7.9)
+    public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
     racc (1.7.1)
@@ -200,6 +214,7 @@ DEPENDENCIES
   fast_jsonapi (~> 1.5)
   jwt (~> 2.7)
   pg (~> 1.1)
+  premailer-rails
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.6)
