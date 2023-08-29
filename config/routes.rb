@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    get '/', to: proc { [200, {}, ['']] }
-  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
