@@ -1,6 +1,7 @@
 class Api::AdminsController < ApplicationController
   before_action :setup_admin, only: %i[show update destroy]
   before_action :check_owner, only: %i[update destroy]
+  wrap_parameters include: %i[username first_name last_name email password password_confirmation]
 
   def show
     traders = { include: [:traders] }
