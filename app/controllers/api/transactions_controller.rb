@@ -2,6 +2,7 @@ class Api::TransactionsController < ApplicationController
   before_action :setup_transaction, only: %i[show destroy]
   before_action :check_current_ticker, only: %i[create]
   before_action :check_ticker, only: %i[destroy]
+  after_save :update_trader_balance, only: :create
 
   def index
     @transaction = Transaction.all
@@ -17,7 +18,6 @@ class Api::TransactionsController < ApplicationController
     @transaction = current_ticker.transactions.build(transaction_params)
 
     if @transaction.save
-      update_trader_balance
       render json: TransactionSerializer.new(@transaction).serializable_hash, status: :created
     else
       render json: @transaction.errors, status: :unprocessable_entity
