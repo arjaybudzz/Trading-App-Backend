@@ -2,7 +2,7 @@ class Api::TransactionsController < ApplicationController
   before_action :setup_transaction, only: %i[show destroy]
   before_action :check_current_ticker, only: %i[create]
   before_action :check_ticker, only: %i[destroy]
-  after_save :update_trader_balance, only: :create
+  after_action :update_trader_balance, only: :create
 
   def index
     @transaction = Transaction.all
