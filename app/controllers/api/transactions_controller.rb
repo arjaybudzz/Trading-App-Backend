@@ -29,6 +29,8 @@ class Api::TransactionsController < ApplicationController
     head 204
   end
 
+
+
   private
 
   def setup_transaction
@@ -37,6 +39,10 @@ class Api::TransactionsController < ApplicationController
 
   def transaction_params
     params.require(:transaction).permit(:stock, :profit, :percent, :action)
+  end
+
+  def check_ticker
+    head :forbidden unless @transaction.ticker_id == current_ticker&.id
   end
 
   def update_trader_balance
@@ -48,7 +54,4 @@ class Api::TransactionsController < ApplicationController
     end
   end
 
-  def check_ticker
-    head :forbidden unless @transaction.ticker_id == current_ticker&.id
-  end
 end

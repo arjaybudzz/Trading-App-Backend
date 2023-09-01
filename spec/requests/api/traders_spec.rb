@@ -4,6 +4,7 @@ RSpec.describe 'Api::Traders', type: :request do
   setup do
     @trader_sample = create(:trader)
     @trader_params = attributes_for(:trader)
+    @invalid_trader_params = attributes_for(:invalid_username)
   end
 
   describe 'GET /index' do
@@ -36,7 +37,17 @@ RSpec.describe 'Api::Traders', type: :request do
       it { expect(response).to have_http_status(:created) }
     end
 
-    context 'forbid to create a user if there is no existing admin' do
+    context 'forbid to create a trader if input is invalid' do
+      before do
+        post '/api/traders', params: { trader: @invalid_trader_params },
+                             headers: { Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id) },
+                             as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
+    context 'forbid to create a trader if there is no existing admin' do
       before do
         post '/api/traders', params: { trader: @trader_params }, as: :json
       end
@@ -47,15 +58,27 @@ RSpec.describe 'Api::Traders', type: :request do
 
   describe 'PUT /update' do
     context 'update information if authorized' do
-      let(:update_attributes) { attributes_for(:trader) }
-
       before do
-        put "/api/traders/#{@trader_sample.id}", params: { trader: update_attributes },
-                                                headers: { Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id) },
-                                                as: :json
+        put "/api/traders/#{@trader_sample.id}", params: { trader: @trader_params },
+                                                 headers: {
+                                                  Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id)
+                                                 },
+                                                 as: :json
       end
 
       it { expect(response).to have_http_status(:success) }
+    end
+
+    context 'do not update information if input is invalid' do
+      before do
+        put "/api/traders/#{@trader_sample.id}", params: { trader: @invalid_trader_params },
+                                                 headers: {
+                                                  Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id)
+                                                 },
+                                                 as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
     end
 
     context 'forbid update if unauthorized' do
@@ -64,7 +87,9 @@ RSpec.describe 'Api::Traders', type: :request do
 
       before do
         put "/api/traders/#{@trader_sample.id}", params: { trader: update_attributes },
-                                                 headers: { Authorization: JsonWebToken.encode(admin_id: another_trader.admin_id) },
+                                                 headers: {
+                                                  Authorization: JsonWebToken.encode(admin_id: another_trader.admin_id)
+                                                 },
                                                  as: :json
       end
 
@@ -75,7 +100,11 @@ RSpec.describe 'Api::Traders', type: :request do
   describe 'DELETE /destroy' do
     context 'allow delete if authorized' do
       before do
-        delete "/api/traders/#{@trader_sample.id}", headers: { Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id) }, as: :json
+        delete "/api/traders/#{@trader_sample.id}",
+        headers: {
+          Authorization: JsonWebToken.encode(admin_id: @trader_sample.admin_id)
+        },
+        as: :json
       end
 
       it { expect(response).to have_http_status(:no_content) }
@@ -85,7 +114,11 @@ RSpec.describe 'Api::Traders', type: :request do
       let(:another_trader) { create(:trader) }
 
       before do
-        delete "/api/traders/#{@trader_sample.id}", headers: { Authorization: JsonWebToken.encode(admin_id: another_trader.admin_id) }, as: :json
+        delete "/api/traders/#{@trader_sample.id}",
+        headers: {
+          Authorization: JsonWebToken.encode(admin_id: another_trader.admin_id)
+        },
+        as: :json
       end
 
       it { expect(response).to have_http_status(:forbidden) }

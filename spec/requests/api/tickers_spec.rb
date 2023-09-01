@@ -34,6 +34,16 @@ RSpec.describe "Api::Tickers", type: :request do
       it { expect(response).to have_http_status(:created) }
     end
 
+    context 'do not create ticker if there are missing attributes' do
+      let(:ticker_sample) { create(:ticker) }
+      before do
+        post '/api/tickers', params: { ticker: { symbol: "" } },
+                             headers: { Authorization: JsonWebToken.encode(trader_id: ticker_sample.trader_id) }, as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
+    end
+
     context 'forbid create ticker if unauthorized' do
       let(:ticker_attributes) { attributes_for(:ticker) }
 
@@ -57,6 +67,18 @@ RSpec.describe "Api::Tickers", type: :request do
       end
 
       it { expect(response).to have_http_status(:success) }
+    end
+
+    context 'do not update if input is invalid' do
+      let(:ticker_sample) { create(:ticker) }
+
+      before do
+        put "/api/tickers/#{ticker_sample.id}", params: { ticker: { symbol: ""} },
+                                                headers: { Authorization: JsonWebToken.encode(trader_id: ticker_sample.trader_id) },
+                                                as: :json
+      end
+
+      it { expect(response).to have_http_status(:unprocessable_entity) }
     end
 
     context 'forbid update ticker if unauthorized' do

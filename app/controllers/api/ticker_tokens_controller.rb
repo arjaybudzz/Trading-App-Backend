@@ -10,7 +10,7 @@ class Api::TickerTokensController < ApplicationController
         latest_price: @ticker.latest_price
       }
     else
-      head :not_found
+      head :unauthorized
     end
   end
 
