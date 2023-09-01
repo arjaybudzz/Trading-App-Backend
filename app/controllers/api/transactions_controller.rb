@@ -29,8 +29,6 @@ class Api::TransactionsController < ApplicationController
     head 204
   end
 
-
-
   private
 
   def setup_transaction
@@ -53,5 +51,4 @@ class Api::TransactionsController < ApplicationController
       StockComputingApi.sell_profit(current_ticker, @transaction, current_ticker.trader)
     end
   end
-
 end

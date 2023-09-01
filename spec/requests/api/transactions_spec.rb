@@ -3,13 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Api::Transactions', type: :request do
 
   setup do
-    @transaction_sample = create(:transaction)
-    @transaction_params_buyer = attributes_for(:transaction)
-    @invalid_transaction_params = attributes_for(:transaction, :empty_stock_name)
-    @ticker_sample = create(:ticker)
-    @another_transaction_sample = create(:transaction)
     @trader_sample = create(:trader)
+
+    @ticker_sample = create(:ticker)
+
+    @transaction_sample = create(:transaction)
+    @another_transaction_sample = create(:transaction)
+
+    @transaction_params_buyer = attributes_for(:transaction)
     @transaction_params_seller = attributes_for(:transaction, :seller)
+    @invalid_transaction_params = attributes_for(:transaction, :empty_stock_name)
   end
 
   describe 'GET /index' do
@@ -42,7 +45,7 @@ RSpec.describe 'Api::Transactions', type: :request do
       it { expect(StockComputingApi.buy_profit(@ticker_sample, @transaction_sample, @trader_sample)).to eq(true) }
     end
 
-    context 'create a sell transaction and activate StockComputingApi.buy_profit' do
+    context 'create a sell transaction and activate StockComputingApi.sell_profit' do
       before do
         post '/api/transactions', params: { transaction: @transaction_params_seller },
                                   headers: { Authorization: JsonWebToken.encode(ticker_id: @ticker_sample.id) },
